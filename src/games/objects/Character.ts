@@ -19,7 +19,7 @@ export class RunningState implements CharacterState {
     this.textures = idleTextures;
     this.sprite = new PIXI.AnimatedSprite(this.textures);
     this.sprite.anchor.set(0.5);
-    this.sprite.scale.set(2);
+    this.sprite.scale.set(3);
     this.sprite.loop = true;
     this.sprite.animationSpeed = 0.1; // Adjust speed as needed
     this.sprite.play();
@@ -45,7 +45,7 @@ export class IdleState implements CharacterState {
     this.sprite = new PIXI.AnimatedSprite(this.textures);
     this.sprite.anchor.set(0.5);
     this.sprite.loop = true;
-    this.sprite.scale.set(2);
+    this.sprite.scale.set(3);
     this.sprite.animationSpeed = 0.1; // Adjust speed as needed
     this.sprite.play();
   }
@@ -139,6 +139,13 @@ export class Character extends PIXI.Container {
       );
     }
 
+    // flip
+    if (this.direction.x < 0) {
+      this.sprite.scale.x = -3;
+    } else if (this.direction.x > 0) {
+      this.sprite.scale.x = 3;
+    }
+
     if (this.direction.x === 0 && this.direction.y === 0) {
       if (this.state !== this.stateList.idle) {
         this.switchState("idle");
@@ -150,13 +157,6 @@ export class Character extends PIXI.Container {
     }
 
     this.state.update(this, delta);
-
-    // flip
-    if (this.direction.x < 0) {
-      this.sprite.scale.x = -2;
-    } else if (this.direction.x > 0) {
-      this.sprite.scale.x = 2;
-    }
   }
 
   private switchState(newState: string) {
