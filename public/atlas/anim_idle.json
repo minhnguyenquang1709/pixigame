@@ -1,0 +1,159 @@
+{
+  "frames": {
+    "idle_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "idle_1": {
+      "frame": {
+        "x": 0,
+        "y": 63,
+        "w": 45,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "idle_2": {
+      "frame": {
+        "x": 0,
+        "y": 126,
+        "w": 45,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "idle_3": {
+      "frame": {
+        "x": 0,
+        "y": 189,
+        "w": 45,
+        "h": 60
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 60
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 60
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "idle_4": {
+      "frame": {
+        "x": 0,
+        "y": 249,
+        "w": 45,
+        "h": 60
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 60
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 60
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "idle_5": {
+      "frame": {
+        "x": 0,
+        "y": 249,
+        "w": 45,
+        "h": 60
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 60
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 60
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "anim_idle.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 45,
+      "h": 309
+    },
+    "scale": 3
+  }
+}

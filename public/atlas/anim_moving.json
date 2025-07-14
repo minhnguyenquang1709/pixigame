@@ -1,0 +1,159 @@
+{
+  "frames": {
+    "moving_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 69
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 69
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 69
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "moving_3": {
+      "frame": {
+        "x": 0,
+        "y": 69,
+        "w": 45,
+        "h": 69
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 69
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 69
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "moving_1": {
+      "frame": {
+        "x": 0,
+        "y": 138,
+        "w": 45,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "moving_4": {
+      "frame": {
+        "x": 0,
+        "y": 204,
+        "w": 45,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "moving_2": {
+      "frame": {
+        "x": 0,
+        "y": 270,
+        "w": 45,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "moving_5": {
+      "frame": {
+        "x": 0,
+        "y": 333,
+        "w": 45,
+        "h": 63
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 45,
+        "h": 63
+      },
+      "sourceSize": {
+        "w": 45,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "anim_moving.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 45,
+      "h": 396
+    },
+    "scale": 3
+  }
+}
