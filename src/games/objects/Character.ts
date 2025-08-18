@@ -12,12 +12,12 @@ export class RunningState implements CharacterState {
   sprite: PIXI.AnimatedSprite;
 
   constructor() {
-    const idleTextures = [];
+    const runningTextures = [];
     for (let i = 0; i < 6; i++) {
       const texture = PIXI.Texture.from(`moving_${i}`);
-      idleTextures.push(texture);
+      runningTextures.push(texture);
     }
-    this.textures = idleTextures;
+    this.textures = runningTextures;
     this.sprite = new PIXI.AnimatedSprite(this.textures);
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(3);
