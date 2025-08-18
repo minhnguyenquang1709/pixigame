@@ -28,7 +28,7 @@ export const GameScreen = () => {
 /**
  * Display the game overlay, such as the score, time, buttons, etc.
  */
-const GameOverlay = (props) => {
+const GameOverlay = (props: any) => {
   return (
     <div className="absolute size-full flex flex-col place-items-center">
       <h1 className="text-2xl font-bold text-white">Game Overlay</h1>
