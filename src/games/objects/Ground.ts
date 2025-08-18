@@ -12,12 +12,12 @@ export class Ground extends PIXI.Container {
       throw new Error("Background texture not found");
     }
 
-    console.log("Texture info:", {
-      width: texture.width,
-      height: texture.height,
-      baseTexture: texture.baseTexture.width + "x" + texture.baseTexture.height,
-      frame: texture.frame,
-    });
+    // console.log("Texture info:", {
+    //   width: texture.width,
+    //   height: texture.height,
+    //   baseTexture: texture.baseTexture.width + "x" + texture.baseTexture.height,
+    //   frame: texture.frame,
+    // });
 
     this.sprite = new PIXI.TilingSprite(texture);
     this.sprite.setSize(GameConstants.WIDTH, GameConstants.HEIGHT);

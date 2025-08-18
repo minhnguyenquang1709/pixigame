@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import { GameConstants } from "../GameConstants";
 
 interface CharacterState {
+  sprite: PIXI.Sprite;
   handleInput: (character: Character, event: KeyboardEvent) => void;
   update: (character: Character, delta: number) => void;
 }
@@ -21,7 +22,7 @@ export class RunningState implements CharacterState {
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(3);
     this.sprite.loop = true;
-    this.sprite.animationSpeed = 0.1; // Adjust speed as needed
+    this.sprite.animationSpeed = 0.1;
     this.sprite.play();
   }
   handleInput(character: Character, event: KeyboardEvent) {
