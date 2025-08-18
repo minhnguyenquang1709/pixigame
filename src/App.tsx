@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { GameScreen } from "./screens/GameScreen";
 
 function App() {

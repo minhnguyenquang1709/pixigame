@@ -2,18 +2,16 @@ import { BaseScreen } from "./BaseScreen";
 import * as PIXI from "pixi.js";
 import { Ground } from "./objects/Ground";
 import { Character } from "./objects/Character";
+import { eventEmitter } from "../utils/event-emitter";
 
 export class GameplayScreen extends BaseScreen {
   app: PIXI.Application;
   character: Character;
   bg: Ground;
-  handleInputBound(event: KeyboardEvent): void;
 
   constructor(app: PIXI.Application) {
     super();
     this.app = app; // Store the PIXI application instance
-
-    this.handleInputBound = this.handleInput.bind(this); // Bind the input handler
 
     this.initBackground();
     this.initCharacter();
@@ -43,13 +41,13 @@ export class GameplayScreen extends BaseScreen {
   initEvents() {
     this.eventMode = "static";
 
-    window.addEventListener("keydown", this.handleInputBound);
-    window.addEventListener("keyup", this.handleInputBound);
+    eventEmitter.on("keydown", this.handleInput.bind(this));
+    eventEmitter.on("keyup", this.handleInput.bind(this));
   }
 
   handleInput(event: KeyboardEvent): void {
     // Handle keyboard input for character movement
-    console.log("Input event:", event.key);
+    // console.log("Input event:", event.key);
     if (this.character) {
       this.character.handleInput(event);
     }
@@ -60,7 +58,7 @@ export class GameplayScreen extends BaseScreen {
       return;
     }
     this.app.ticker.stop(); // Stop the PIXI application ticker
-    console.log("Game paused");
+    // console.log("Game paused");
   }
 
   resume() {
@@ -68,23 +66,20 @@ export class GameplayScreen extends BaseScreen {
       return;
     }
     this.app.ticker.start(); // Start the PIXI application ticker
-    console.log("Game resumed");
+    // console.log("Game resumed");
   }
 
-  public update(_delta: number) {
-    // Custom update logic for the gameplay screen
-    // This method will be called every frame by the PIXI application
-    this.children.forEach((child) => {
-      child.update(_delta);
-    });
+  public update(delta: number) {
+    this.character.update(delta);
+    this.bg.update(delta);
   }
 
   destroy(options?: PIXI.DestroyOptions): void {
     super.destroy(options);
     this.eventMode = "none"; // Disable event handling
 
-    window.removeEventListener("keydown", this.handleInputBound);
-    window.removeEventListener("keyup", this.handleInputBound);
+    eventEmitter.off("keydown");
+    eventEmitter.off("keyup");
 
     console.log("GameplayScreen destroyed");
   }
