@@ -88,24 +88,25 @@ export class Character extends PIXI.Container {
   public handleInput(event: KeyboardEvent) {
     // Handle input for character movement
     // console.log("Character input event:", event.key);
+    const eventCode = event.code || event.key.toLowerCase();
     if (event.type === "keydown") {
-      this.keyState[event.key] = true;
+      this.keyState[eventCode] = true;
     }
     if (event.type === "keyup") {
-      this.keyState[event.key] = false;
+      this.keyState[eventCode] = false;
     }
     console.log("Key state:", this.keyState);
 
-    if (this.keyState["ArrowUp"] || this.keyState["w"]) {
+    if (this.keyState["ArrowUp"] || this.keyState["KeyW"]) {
       this.direction.y = -1;
-    } else if (this.keyState["ArrowDown"] || this.keyState["s"]) {
+    } else if (this.keyState["ArrowDown"] || this.keyState["KeyS"]) {
       this.direction.y = 1;
     } else {
       this.direction.y = 0;
     }
-    if (this.keyState["ArrowLeft"] || this.keyState["a"]) {
+    if (this.keyState["ArrowLeft"] || this.keyState["KeyA"]) {
       this.direction.x = -1;
-    } else if (this.keyState["ArrowRight"] || this.keyState["d"]) {
+    } else if (this.keyState["ArrowRight"] || this.keyState["KeyD"]) {
       this.direction.x = 1;
     } else {
       this.direction.x = 0;
@@ -118,13 +119,13 @@ export class Character extends PIXI.Container {
   update(delta: number) {
     if (
       this.keyState["ArrowUp"] ||
-      this.keyState["w"] ||
+      this.keyState["KeyW"] ||
       this.keyState["ArrowDown"] ||
-      this.keyState["s"] ||
+      this.keyState["KeyS"] ||
       this.keyState["ArrowLeft"] ||
-      this.keyState["a"] ||
+      this.keyState["KeyA"] ||
       this.keyState["ArrowRight"] ||
-      this.keyState["d"]
+      this.keyState["KeyD"]
     ) {
       this.x += this.velocity.x * delta;
       this.y += this.velocity.y * delta;
