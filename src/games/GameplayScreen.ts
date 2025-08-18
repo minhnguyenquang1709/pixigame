@@ -2,7 +2,6 @@ import { BaseScreen } from "./BaseScreen";
 import * as PIXI from "pixi.js";
 import { Ground } from "./objects/Ground";
 import { Character } from "./objects/Character";
-import { eventEmitter } from "../utils/event-emitter";
 
 export class GameplayScreen extends BaseScreen {
   app: PIXI.Application;
@@ -41,8 +40,8 @@ export class GameplayScreen extends BaseScreen {
   initEvents() {
     this.eventMode = "static";
 
-    eventEmitter.on("keydown", this.handleInput.bind(this));
-    eventEmitter.on("keyup", this.handleInput.bind(this));
+    window.addEventListener("keydown", this.handleInput.bind(this));
+    window.addEventListener("keyup", this.handleInput.bind(this));
   }
 
   handleInput(event: KeyboardEvent): void {
@@ -76,10 +75,12 @@ export class GameplayScreen extends BaseScreen {
 
   destroy(options?: PIXI.DestroyOptions): void {
     super.destroy(options);
+    this.character.destroy(options);
+    this.bg.destroy(options);
     this.eventMode = "none"; // Disable event handling
 
-    eventEmitter.off("keydown");
-    eventEmitter.off("keyup");
+    window.removeEventListener("keydown", this.handleInput.bind(this));
+    window.removeEventListener("keyup", this.handleInput.bind(this));
 
     console.log("GameplayScreen destroyed");
   }
