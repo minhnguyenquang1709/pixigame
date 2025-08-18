@@ -7,15 +7,17 @@ export const usePixiApplication = (
   canvasRef: React.RefObject<PIXI.ICanvas | undefined>
 ) => {
   const gameplay = useRef<GameplayScreen>(null);
+  const app = useRef<PIXI.Application | null>(null);
   useEffect(() => {
     if (!canvasRef.current) {
       console.error("Canvas ref is not available.");
       return;
     }
 
-    const app = new PIXI.Application();
+    const appInstance = new PIXI.Application();
+    app.current = appInstance;
     const init = async () => {
-      await app.init({
+      await appInstance.init({
         width: GameConstants.WIDTH, // game world width
         height: GameConstants.HEIGHT,
         antialias: true,
@@ -38,11 +40,11 @@ export const usePixiApplication = (
       await PIXI.Assets.load("anim_idle");
       console.log("Assets loaded");
 
-      const gamePlayScreen = new GameplayScreen(app);
+      const gamePlayScreen = new GameplayScreen(appInstance);
       gameplay.current = gamePlayScreen;
-      app.stage.addChild(gamePlayScreen);
+      appInstance.stage.addChild(gamePlayScreen);
 
-      app.ticker.add((ticker: PIXI.Ticker) => {
+      appInstance.ticker.add((ticker: PIXI.Ticker) => {
         gamePlayScreen.update(ticker.deltaMS / 1000);
       });
     };
@@ -52,7 +54,7 @@ export const usePixiApplication = (
     // cleanup
     return () => {
       // call application destroy method if it exists
-      app.destroy(true, { children: true });
+      appInstance.destroy(true, { children: true });
       gameplay.current = null;
       canvasRef.current = undefined;
     };
@@ -70,7 +72,9 @@ export const usePixiApplication = (
       gameplay.current?.resume();
     },
     destroyGame: () => {
-      gameplay.current?.destroy(true);
+      console.log("Destroying game...");
+      // gameplay.current?.destroy({ children: true });
+      app.current?.destroy();
     },
   };
 };
