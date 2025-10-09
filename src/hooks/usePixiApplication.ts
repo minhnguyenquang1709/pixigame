@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
-import { GameConstants } from "../games/GameConstants";
-import { GameplayScreen } from "../games/GameplayScreen";
+import { GameConstants } from "../game/GameConstants";
+import { GameplayScreen } from "../game/GameplayScreen";
+import { AppLogger } from "../logging/logger";
 
 export const usePixiApplication = (
   canvasRef: React.RefObject<PIXI.ICanvas | undefined>
@@ -38,7 +39,7 @@ export const usePixiApplication = (
       await PIXI.Assets.load("texture");
       await PIXI.Assets.load("anim_moving");
       await PIXI.Assets.load("anim_idle");
-      console.log("Assets loaded");
+      AppLogger.log("Assets loaded");
 
       const gamePlayScreen = new GameplayScreen(appInstance);
       gameplay.current = gamePlayScreen;
@@ -72,7 +73,7 @@ export const usePixiApplication = (
       gameplay.current?.resume();
     },
     destroyGame: () => {
-      console.log("Destroying game...");
+      AppLogger.log("Destroying game...");
       // gameplay.current?.destroy({ children: true });
       app.current?.destroy();
     },
