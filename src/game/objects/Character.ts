@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { GameConstants } from "../GameConstants";
-import { InputSystemLogger } from "../../logging/logger";
+import { InputSystemLogger } from "../../utils/logger";
 
 interface CharacterState {
   sprite: PIXI.Sprite;
@@ -115,6 +115,8 @@ export class Character extends PIXI.Container {
     this.velocity.x = this.direction.x * this.velocityScale;
     this.velocity.y = this.direction.y * this.velocityScale;
   }
+
+  private _move(velocity: PIXI.Point) {}
 
   update(delta: number) {
     if (

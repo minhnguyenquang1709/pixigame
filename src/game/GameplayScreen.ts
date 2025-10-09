@@ -2,7 +2,7 @@ import { BaseScreen } from "./BaseScreen";
 import * as PIXI from "pixi.js";
 import { Ground } from "./objects/Ground";
 import { Character } from "./objects/Character";
-import { InputSystemLogger } from "../logging/logger";
+import { InputSystemLogger } from "../utils/logger";
 
 export class GameplayScreen extends BaseScreen {
   app: PIXI.Application;

@@ -1,4 +1,4 @@
-import { ILogger } from "../interfaces/logging";
+import { ILogger } from "../types/logging";
 
 const LOG_CONFIG = {
   AudioSystem: { enabled: false, color: "#00FFFF" },

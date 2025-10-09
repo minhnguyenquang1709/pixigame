@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
 import { GameConstants } from "../game/GameConstants";
 import { GameplayScreen } from "../game/GameplayScreen";
-import { AppLogger } from "../logging/logger";
+import { AppLogger } from "../utils/logger";
 
 export const usePixiApplication = (
   canvasRef: React.RefObject<PIXI.ICanvas | undefined>
