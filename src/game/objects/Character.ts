@@ -1,14 +1,9 @@
 import * as PIXI from "pixi.js";
 import { GameConstants } from "../GameConstants";
 import { InputSystemLogger } from "../../utils/logger";
+import { IState } from "../../types/state";
 
-interface CharacterState {
-  sprite: PIXI.Sprite;
-  handleInput: (character: Character, event: KeyboardEvent) => void;
-  update: (character: Character, delta: number) => void;
-}
-
-export class RunningState implements CharacterState {
+export class RunningState implements IState {
   textures: PIXI.Texture[];
   sprite: PIXI.AnimatedSprite;
 
@@ -24,16 +19,13 @@ export class RunningState implements CharacterState {
     this.sprite.scale.set(3);
     this.sprite.loop = true;
     this.sprite.animationSpeed = 0.1;
+  }
+  enter() {
     this.sprite.play();
   }
-  handleInput(character: Character, event: KeyboardEvent) {
-    character.handleInput(event);
-  }
-
-  update(character: Character, delta: number) {}
 }
 
-export class IdleState implements CharacterState {
+export class IdleState implements IState {
   textures: PIXI.Texture[];
   sprite: PIXI.AnimatedSprite;
 
@@ -48,14 +40,11 @@ export class IdleState implements CharacterState {
     this.sprite.anchor.set(0.5);
     this.sprite.loop = true;
     this.sprite.scale.set(3);
-    this.sprite.animationSpeed = 0.1; // Adjust speed as needed
+    this.sprite.animationSpeed = 0.1;
+  }
+  enter() {
     this.sprite.play();
   }
-  handleInput(character: Character, event: KeyboardEvent) {
-    character.handleInput(event);
-  }
-
-  update(character: Character, delta: number) {}
 }
 
 export class Character extends PIXI.Container {
