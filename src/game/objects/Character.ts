@@ -1,7 +1,8 @@
 import * as PIXI from "pixi.js";
 import { GameConstants } from "../GameConstants";
 import { InputSystemLogger } from "../../utils/logger";
-import { IState } from "../../types/state";
+import { EPlayerState, IState } from "../../types/state";
+import { IStateMachine, StateMachine } from "./StateMachine";
 
 export class RunningState implements IState {
   textures: PIXI.Texture[];
@@ -19,6 +20,8 @@ export class RunningState implements IState {
     this.sprite.scale.set(3);
     this.sprite.loop = true;
     this.sprite.animationSpeed = 0.1;
+
+    this.enter();
   }
   enter() {
     this.sprite.play();
@@ -41,6 +44,8 @@ export class IdleState implements IState {
     this.sprite.loop = true;
     this.sprite.scale.set(3);
     this.sprite.animationSpeed = 0.1;
+
+    this.enter();
   }
   enter() {
     this.sprite.play();
@@ -53,18 +58,15 @@ export class Character extends PIXI.Container {
   keyState: { [key: string]: boolean } = {};
   velocity: PIXI.Point;
   velocityScale: number;
-  stateList: { [key: string]: CharacterState };
-  state: CharacterState;
+  stateMachine: IStateMachine;
 
   constructor() {
     super();
-    this.stateList = {
-      idle: new IdleState(),
-      running: new RunningState(),
-    };
-    this.state = this.stateList.idle; // Start in idle state
+    this.stateMachine = new StateMachine({
+      [EPlayerState.IDLE]: new IdleState(),
+      [EPlayerState.RUNNING]: new RunningState(),
+    });
 
-    this.sprite = this.state.sprite;
     this.sprite.anchor.set(0.5);
     this.x = GameConstants.WIDTH / 2;
     this.y = GameConstants.HEIGHT / 2;
