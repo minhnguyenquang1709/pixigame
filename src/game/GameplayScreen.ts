@@ -2,6 +2,7 @@ import { BaseScreen } from "./BaseScreen";
 import * as PIXI from "pixi.js";
 import { Ground } from "./objects/Ground";
 import { Character } from "./objects/Character";
+import { InputSystemLogger } from "../utils/logger";
 
 export class GameplayScreen extends BaseScreen {
   app: PIXI.Application;
@@ -46,7 +47,6 @@ export class GameplayScreen extends BaseScreen {
 
   handleInput(event: KeyboardEvent): void {
     // Handle keyboard input for character movement
-    // console.log("Input event:", event.key);
     if (this.character) {
       this.character.handleInput(event);
     }
@@ -57,7 +57,7 @@ export class GameplayScreen extends BaseScreen {
       return;
     }
     this.app.ticker.stop(); // Stop the PIXI application ticker
-    // console.log("Game paused");
+    InputSystemLogger.log("Game paused");
   }
 
   resume() {
@@ -65,7 +65,7 @@ export class GameplayScreen extends BaseScreen {
       return;
     }
     this.app.ticker.start(); // Start the PIXI application ticker
-    // console.log("Game resumed");
+    InputSystemLogger.log("Game resumed");
   }
 
   public update(delta: number) {

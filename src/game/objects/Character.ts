@@ -1,13 +1,10 @@
 import * as PIXI from "pixi.js";
 import { GameConstants } from "../GameConstants";
+import { InputSystemLogger } from "../../utils/logger";
+import { EPlayerState, IState } from "../../types/state";
+import { IStateMachine, StateMachine } from "./StateMachine";
 
-interface CharacterState {
-  sprite: PIXI.Sprite;
-  handleInput: (character: Character, event: KeyboardEvent) => void;
-  update: (character: Character, delta: number) => void;
-}
-
-export class RunningState implements CharacterState {
+export class RunningState implements IState {
   textures: PIXI.Texture[];
   sprite: PIXI.AnimatedSprite;
 
@@ -23,16 +20,15 @@ export class RunningState implements CharacterState {
     this.sprite.scale.set(3);
     this.sprite.loop = true;
     this.sprite.animationSpeed = 0.1;
+
+    this.enter();
+  }
+  enter() {
     this.sprite.play();
   }
-  handleInput(character: Character, event: KeyboardEvent) {
-    character.handleInput(event);
-  }
-
-  update(character: Character, delta: number) {}
 }
 
-export class IdleState implements CharacterState {
+export class IdleState implements IState {
   textures: PIXI.Texture[];
   sprite: PIXI.AnimatedSprite;
 
@@ -47,14 +43,13 @@ export class IdleState implements CharacterState {
     this.sprite.anchor.set(0.5);
     this.sprite.loop = true;
     this.sprite.scale.set(3);
-    this.sprite.animationSpeed = 0.1; // Adjust speed as needed
+    this.sprite.animationSpeed = 0.1;
+
+    this.enter();
+  }
+  enter() {
     this.sprite.play();
   }
-  handleInput(character: Character, event: KeyboardEvent) {
-    character.handleInput(event);
-  }
-
-  update(character: Character, delta: number) {}
 }
 
 export class Character extends PIXI.Container {
@@ -63,18 +58,15 @@ export class Character extends PIXI.Container {
   keyState: { [key: string]: boolean } = {};
   velocity: PIXI.Point;
   velocityScale: number;
-  stateList: { [key: string]: CharacterState };
-  state: CharacterState;
+  stateMachine: IStateMachine;
 
   constructor() {
     super();
-    this.stateList = {
-      idle: new IdleState(),
-      running: new RunningState(),
-    };
-    this.state = this.stateList.idle; // Start in idle state
+    this.stateMachine = new StateMachine({
+      [EPlayerState.IDLE]: new IdleState(),
+      [EPlayerState.RUNNING]: new RunningState(),
+    });
 
-    this.sprite = this.state.sprite;
     this.sprite.anchor.set(0.5);
     this.x = GameConstants.WIDTH / 2;
     this.y = GameConstants.HEIGHT / 2;
@@ -87,7 +79,6 @@ export class Character extends PIXI.Container {
 
   public handleInput(event: KeyboardEvent) {
     // Handle input for character movement
-    // console.log("Character input event:", event.key);
     const eventCode = event.code || event.key.toLowerCase();
     if (event.type === "keydown") {
       this.keyState[eventCode] = true;
@@ -95,7 +86,7 @@ export class Character extends PIXI.Container {
     if (event.type === "keyup") {
       this.keyState[eventCode] = false;
     }
-    console.log("Key state:", this.keyState);
+    InputSystemLogger.log("Key state:", this.keyState);
 
     if (this.keyState["ArrowUp"] || this.keyState["KeyW"]) {
       this.direction.y = -1;
@@ -115,6 +106,8 @@ export class Character extends PIXI.Container {
     this.velocity.x = this.direction.x * this.velocityScale;
     this.velocity.y = this.direction.y * this.velocityScale;
   }
+
+  private _move(velocity: PIXI.Point) {}
 
   update(delta: number) {
     if (
