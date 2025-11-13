@@ -1,21 +1,15 @@
-export interface ICommand{
+export interface ICommand {
   execute(): void;
 }
 
 class Command implements ICommand {
-  constructor(){}
+  constructor() {}
 
-  public execute(): void {
-    
-  }
+  public execute(): void {}
 }
 
-class HitCommand extends Command{
-  constructor() {
-    super();
-  }
+class HitCommand implements ICommand {
+  constructor() {}
 
-  public execute(): void {
-    
-  }
+  public execute(): void {}
 }
