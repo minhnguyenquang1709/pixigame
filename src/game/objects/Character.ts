@@ -4,6 +4,7 @@ import { InputSystemLogger } from "../../utils/logger";
 import { EPlayerState, IRenderableState, IState } from "../../types/state";
 import { IStateMachine, StateMachine } from "../../systems/StateMachine";
 import { BaseGameObject } from "./BaseGameObject";
+import { SpriteController } from "../../systems/SpriteController";
 
 export class RunningState implements IState {
   textures: PIXI.Texture[];
@@ -64,6 +65,7 @@ export class Character extends BaseGameObject {
   velocity: PIXI.Point;
   velocityScale: number;
   stateMachine: IStateMachine;
+  spriteController: SpriteController;
 
   constructor() {
     super();
@@ -71,15 +73,13 @@ export class Character extends BaseGameObject {
       [EPlayerState.IDLE]: new IdleState(),
       [EPlayerState.RUNNING]: new RunningState(),
     });
+    this.spriteController = new SpriteController(this, this.stateMachine);
 
     this.direction = new PIXI.Point(0, 0);
     this.velocity = new PIXI.Point(0, 0);
     this.velocityScale = 300;
 
     const currentState = this.stateMachine.currentState;
-    if (currentState && "sprite" in currentState) {
-      this.addChild((currentState as IRenderableState).sprite);
-    }
   }
 
   public handleInput(event: KeyboardEvent) {
@@ -141,8 +141,10 @@ export class Character extends BaseGameObject {
 
     if (this.direction.x === 0 && this.direction.y === 0) {
       this.stateMachine.switchState(EPlayerState.IDLE);
+      this.spriteController.syncWithCurrentState();
     } else {
       this.stateMachine.switchState(EPlayerState.RUNNING);
+      this.spriteController.syncWithCurrentState();
     }
 
     this.stateMachine.update(delta);
