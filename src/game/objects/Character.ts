@@ -1,8 +1,9 @@
 import * as PIXI from "pixi.js";
 import { GameConstants } from "../GameConstants";
 import { InputSystemLogger } from "../../utils/logger";
-import { EPlayerState, IState } from "../../types/state";
-import { IStateMachine, StateMachine } from "./StateMachine";
+import { EPlayerState, IRenderableState, IState } from "../../types/state";
+import { IStateMachine, StateMachine } from "../../systems/StateMachine";
+import { BaseGameObject } from "./BaseGameObject";
 
 export class RunningState implements IState {
   textures: PIXI.Texture[];
@@ -26,9 +27,11 @@ export class RunningState implements IState {
   enter() {
     this.sprite.play();
   }
+  update(delta: number) {}
+  exit() {}
 }
 
-export class IdleState implements IState {
+export class IdleState implements IRenderableState {
   textures: PIXI.Texture[];
   sprite: PIXI.AnimatedSprite;
 
@@ -50,10 +53,12 @@ export class IdleState implements IState {
   enter() {
     this.sprite.play();
   }
+  update(delta: number) {}
+
+  exit() {}
 }
 
-export class Character extends PIXI.Container {
-  sprite: PIXI.Sprite | PIXI.AnimatedSprite;
+export class Character extends BaseGameObject {
   direction: PIXI.Point;
   keyState: { [key: string]: boolean } = {};
   velocity: PIXI.Point;
@@ -67,14 +72,14 @@ export class Character extends PIXI.Container {
       [EPlayerState.RUNNING]: new RunningState(),
     });
 
-    this.sprite.anchor.set(0.5);
-    this.x = GameConstants.WIDTH / 2;
-    this.y = GameConstants.HEIGHT / 2;
-    this.addChild(this.sprite);
-
     this.direction = new PIXI.Point(0, 0);
     this.velocity = new PIXI.Point(0, 0);
-    this.velocityScale = 300; // Adjust speed as needed
+    this.velocityScale = 300;
+
+    const currentState = this.stateMachine.currentState;
+    if (currentState && "sprite" in currentState) {
+      this.addChild((currentState as IRenderableState).sprite);
+    }
   }
 
   public handleInput(event: KeyboardEvent) {
@@ -134,33 +139,12 @@ export class Character extends PIXI.Container {
       );
     }
 
-    // flip
-    if (this.direction.x < 0) {
-      this.sprite.scale.x = -3;
-    } else if (this.direction.x > 0) {
-      this.sprite.scale.x = 3;
-    }
-
     if (this.direction.x === 0 && this.direction.y === 0) {
-      if (this.state !== this.stateList.idle) {
-        this.switchState("idle");
-      }
+      this.stateMachine.switchState(EPlayerState.IDLE);
     } else {
-      if (this.state !== this.stateList.running) {
-        this.switchState("running");
-      }
+      this.stateMachine.switchState(EPlayerState.RUNNING);
     }
 
-    this.state.update(this, delta);
-  }
-
-  private switchState(newState: string) {
-    this.removeChild(this.sprite);
-    this.state = this.stateList[newState];
-
-    // set the new sprite
-    this.sprite = this.state.sprite;
-    this.sprite.anchor.set(0.5);
-    this.addChild(this.sprite);
+    this.stateMachine.update(delta);
   }
 }

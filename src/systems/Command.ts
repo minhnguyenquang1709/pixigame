@@ -2,7 +2,7 @@ import { PIXI } from "../types";
 import { ICommand } from "../types/command";
 
 class Command implements ICommand {
-  private _actor: any;
+  protected _actor: any;
   constructor(actor: any) {
     this._actor = actor;
   }
